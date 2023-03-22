@@ -38,3 +38,20 @@ workbook.save('arp.xlsx')
 # close ssh connection
 ssh.close()
 
+# upload result to sftp server
+# create ssh client
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+# connect to server
+ssh.connect(hostname='192.168.1.10', port=22, username='admin', password='admin')
+
+# create sftp client
+sftp = ssh.open_sftp()
+
+# upload file to server using tftp
+sftp.put('arp.xlsx', '/home/admin/arp.xlsx')
+
+# close sftp and ssh connections
+sftp.close()
+ssh.close()
